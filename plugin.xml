@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-ms-speech-service" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <name>MicrosoftSpeechService</name>
+  <description>Use the Cognitive Services Speech SDK for iOS with Cordova/PhoneGap.</description>
+  <author>Jan Owsiany</author>
+  <license>MIT</license>
+
+  <js-module name="MicrosoftSpeechService" src="www/msSpeechService.js">
+    <clobbers target="cordova.plugins.msSpeechService" />
+  </js-module>
+
+  <engines>
+    <engine name="cordova" version=">=7.0.0"/>
+    <engine name="cordova-ios" version=">=4.4.0"/>
+  </engines>
+
+  <preference name="SPEECH_KEY" default=""/>
+  <preference name="SERVICE_REGION" default=""/>
+  <preference name="MICROPHONE_USAGE_DESCRIPTION" default="Grant access to your microphone for speech to text"/>
+
+  <platform name="ios">
+    <config-file parent="/*" target="config.xml">
+      <feature name="MicrosoftSpeechService">
+        <param name="ios-package" value="MicrosoftSpeechService" />
+      </feature>
+    </config-file>
+
+    <config-file target="*-Info.plist" parent="NSMicrophoneUsageDescription">
+      <string>$MICROPHONE_USAGE_DESCRIPTION</string>
+    </config-file>
+
+    <config-file target="*-Info.plist" parent="MicrosoftSpeechServiceSpeechKey">
+      <string>$SPEECH_KEY</string>
+    </config-file>
+
+    <config-file target="*-Info.plist" parent="MicrosoftSpeechServiceServiceRegion">
+      <string>$SERVICE_REGION</string>
+    </config-file>
+
+    <source-file src="src/ios/MicrosoftSpeechService.m" />
+
+    <framework src="./bin/MicrosoftCognitiveServicesSpeech.framework" custom="true" embed="true" />
+    <framework src="./bin/MicrosoftCognitiveServicesSpeech.framework" />
+  </platform>
+</plugin>
